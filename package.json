@@ -2,7 +2,8 @@
   "name": "mark-fundamentals-proj--js-xmas-tree",
   "version": "0.0.1",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "license": "CC-BY-NC-ND-4.0",
   "dependencies": {
