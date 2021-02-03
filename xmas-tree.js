@@ -46,21 +46,32 @@ makeFoliageSegment = (foliageHeight, segmentLevel) =>
 //   return `${underscores}${hashes}${underscores}`;
 // }
 
-// Variadic function
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// This variadic helper function takes the elements from underscores & hashes together and calls them "args" - because JS functions can only take one rest parameter
+// Within "args", there are foliageHeight no. of underscores elements followed by foliageHeight no. of hashes elements
+// So I am simply concatenating: 1st underscores element + 1st hashes element + 1st underscores element, 2nd + 2nd + 2nd, and so on
 function foliageHelper(x, foliageHeight, ...args) {
   return String(args[x]).concat('',String(args[foliageHeight+x]),String(args[x]));
 }
 
 function makeTreeFoliage(foliageHeight) {
-  let underscores = [], hashes = [], array = [...Array(foliageHeight).keys()];
-  for (n = 1; n <= foliageHeight; n++) { 
-    underscores.push("_".repeat(foliageHeight - n));
-    hashes.push("#".repeat(n * 2 - 1));
+  // Below, I create a finalArray which contains [1, 2, 3...] as its elements up to foliageHeight
+  let underscores = [], hashes = [], finalArray = [...Array(foliageHeight).keys()];
+  // For every line of the foliage, I push the appropriate number of underscores and hashes to respective arrays
+  for (lineNumber = 1; lineNumber <= foliageHeight; lineNumber++) { 
+    underscores.push("_".repeat(foliageHeight - lineNumber));
+    hashes.push("#".repeat(lineNumber * 2 - 1));
   }
 
-// Rest parameters allow for variadic function
-  return array.map(x => foliageHelper(x, foliageHeight, ...underscores, ...hashes));
+  // Then, I attempt to use the map function to map these underscores and hashes to the final array all at once
+  // This involves taking each element of [1, 2, 3 ... foliageHeight] and entering it into a helper function as a paramater
+  // I enter the underscores & hashes arrays as "rest parameters" using JS spread syntax, because their lengths differ based on foliageHeight - I don't know how many parameters I'm putting in
+  // This allows the helper function to be variadic
+  return finalArray.map(x => foliageHelper(x, foliageHeight, ...underscores, ...hashes));
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // function makeTreeFoliage(foliageHeight) {
 //   let array = [];
